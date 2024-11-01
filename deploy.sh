@@ -74,6 +74,14 @@ cd "$SCRIPT_DIR" || exit
 
 # 安装依赖的函数
 install_dependencies() {
+    # 安装 Git
+    if ! command -v git &> /dev/null; then
+        show "未检测到 Git，正在安装..." "progress"
+        apt update && apt install -y git
+    else
+        show "Git 已安装，跳过安装步骤。" "progress"
+    fi
+
     show "初始化 Git 仓库..." "progress"
     if [ ! -d ".git" ]; then
         git init
@@ -83,9 +91,14 @@ install_dependencies() {
     if ! command -v forge &> /dev/null; then
         show "未检测到 Foundry，正在安装..." "progress"
         curl -L https://foundry.paradigm.xyz | bash
-        source "$HOME/.bashrc"  # 加载环境变量以便找到 foundryup
-        source "$HOME/.foundry/bin/foundryup"  # 初始化 Foundry 环境
-        foundryup  # 安装和更新 Foundry
+
+        # 确保环境变量加载
+        if [ -f "$HOME/.bashrc" ]; then
+            source "$HOME/.bashrc"
+        fi
+
+        # 明确指定 foundryup 路径并执行
+        "$HOME/.foundry/bin/foundryup"
     else
         show "Foundry 已安装，跳过安装步骤。" "progress"
     fi
@@ -220,7 +233,7 @@ menu() {
         1) install_dependencies ;;
         2) input_required_details ;;
         3) deploy_contract ;;
-        4) deploy_multiple_contracts ;;
+         4) deploy_multiple_contracts ;;
         5) exit 0 ;;
         *) show "无效选择，请输入 1 到 5 之间的数字。" "error" ;;
     esac

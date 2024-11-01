@@ -83,6 +83,7 @@ install_dependencies() {
     if ! command -v forge &> /dev/null; then
         show "未检测到 Foundry，正在安装..." "progress"
         curl -L https://foundry.paradigm.xyz | bash
+        source "$HOME/.bashrc"  # 加载环境变量以便找到 foundryup
         source "$HOME/.foundry/bin/foundryup"  # 初始化 Foundry 环境
         foundryup  # 安装和更新 Foundry
     else
@@ -229,4 +230,3 @@ menu() {
 while true; do
     menu
 done
-

@@ -151,7 +151,7 @@ deploy_multiple_contracts() {
 # 菜单显示函数
 menu() {
     echo -e "\n${BLUE}┌─────────────────────────────────────┐${NORMAL}"
-    echo -e "${BLUE}│           菜单选项                 │${NORMAL}"
+    echo -e "${BLUE}│           菜单选项                  │${NORMAL}"
     echo -e "${BLUE}├─────────────────────────────────────┤${NORMAL}"
     echo -e "${BLUE}│  1) 安装依赖                        │${NORMAL}"
     echo -e "${BLUE}│  2) 输入所需信息                    │${NORMAL}"

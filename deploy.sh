@@ -92,13 +92,10 @@ install_dependencies() {
         show "未检测到 Foundry，正在安装..." "progress"
         curl -L https://foundry.paradigm.xyz | bash
 
-        # 确保环境变量加载
+        # 加载环境变量以确保 forge 可用
         if [ -f "$HOME/.bashrc" ]; then
             source "$HOME/.bashrc"
         fi
-
-        # 明确指定 foundryup 路径并执行
-        "$HOME/.foundry/bin/foundryup"
     else
         show "Foundry 已安装，跳过安装步骤。" "progress"
     fi
@@ -233,7 +230,7 @@ menu() {
         1) install_dependencies ;;
         2) input_required_details ;;
         3) deploy_contract ;;
-         4) deploy_multiple_contracts ;;
+        4) deploy_multiple_contracts ;;
         5) exit 0 ;;
         *) show "无效选择，请输入 1 到 5 之间的数字。" "error" ;;
     esac

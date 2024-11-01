@@ -3,10 +3,10 @@
 # 控制台输出样式
 BOLD=$(tput bold)
 NORMAL=$(tput sgr0)
+CYAN='\033[1;36m'
+MAGENTA='\033[1;35m'
 BLUE='\033[1;34m'
-GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-RED='\033[0;31m'
 RESET='\033[0m'
 
 # 彩虹颜色定义
@@ -39,7 +39,7 @@ display_header() {
     clear
     rainbow_border
     echo -e " ${CYAN}${BOLD}🚀 EVM 自动部署合约 🎮${RESET}"
-    echo -e " ${MAGENTA}脚本由 @qklxsqf  编写 🧙‍♂️${RESET}"
+    echo -e " ${MAGENTA}脚本由 @qklxsqf 编写 🧙‍♂️${RESET}"
     echo -e " ${BLUE}欢迎加入电报频道：https://t.me/ksqxszq 🌐${RESET}"
     rainbow_border
     echo

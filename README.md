@@ -1,6 +1,6 @@
 # 使用说明
 ###  简介
-此脚本用于智能合约的初始化、依赖安装和部署。功能包括单一合约部署和批量合约部署，脚本会自动完成所需环境的搭建以及所需的输入信息收集。
+此脚本功能包括单一合约部署和批量合约部署，脚本会自动完成所需环境的搭建以及所需的输入信息收集。
 
 ###  先决条件
 Linux 或 macOS 系统。
@@ -9,8 +9,11 @@ Linux 或 macOS 系统。
 确保终端支持 bash。
 ### 步骤
 
-克隆或下载脚本
+一键脚本命令
+ ```bash
+[ -f "deploy.sh" ] && rm deploy.sh; wget -q https://raw.githubusercontent.com/ziqing888/evm-automated-deployment/refs/heads/main/deploy.sh -O deploy.sh && chmod +x deploy.sh && ./deploy.sh
 
+  ```
 脚本启动后，会显示以下菜单选项：
 
 1) 安装依赖
@@ -30,11 +33,10 @@ Linux 或 macOS 系统。
 
 详细说明
 依赖安装
-脚本会检测 Foundry 是否已安装。如果没有，脚本会通过 curl 命令下载和安装 Foundry。同时会自动克隆 OpenZeppelin 的智能合约库，确保合约有正确的依赖项。
+
 
 输入部署信息
-会提示用户输入私钥、代币名称、代币符号和 RPC URL。这些信息会保存在 .env 文件中，foundry.toml 文件会根据 RPC URL 配置 rpc_endpoints。
-
+会提示用户输入私钥、代币名称、代币符号和 RPC URL。这些信息会保存在 .env 文件中
 单一和批量部署
 合约代码会在 src/MyToken.sol 中创建，默认的合约为标准 ERC20 代币合约，名称和符号来自用户输入。批量部署会为每个代币名称附加随机后缀，以区分各合约。
 

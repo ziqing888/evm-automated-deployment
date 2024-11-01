@@ -18,39 +18,31 @@ CYAN_RAIN='\033[1;36m'
 BLUE_RAIN='\033[1;34m'
 PURPLE_RAIN='\033[1;35m'
 
-# 彩虹方框函数，使用细边框字符包围内容
-rainbow_box() {
-    local width=60  # 设置边框宽度
-
-    # 打印顶部边框
+# 彩虹边框函数，仅显示顶部和底部
+rainbow_border() {
+    local width=60
     for ((i=0; i<width; i++)); do
         case $((i % 6)) in
-            0) printf "${RED_RAIN}═" ;;
-            1) printf "${ORANGE_RAIN}═" ;;
-            2) printf "${YELLOW_RAIN}═" ;;
-            3) printf "${GREEN_RAIN}═" ;;
-            4) printf "${CYAN_RAIN}═" ;;
-            5) printf "${BLUE_RAIN}═" ;;
+            0) printf "${RED_RAIN}=" ;;
+            1) printf "${ORANGE_RAIN}=" ;;
+            2) printf "${YELLOW_RAIN}=" ;;
+            3) printf "${GREEN_RAIN}=" ;;
+            4) printf "${CYAN_RAIN}=" ;;
+            5) printf "${BLUE_RAIN}=" ;;
         esac
     done
     echo -e "${RESET}"
+}
 
-    # 打印内容和左右边框
-    printf "${RED_RAIN}║${RESET}  ${CYAN}${BOLD}🚀 EVM 自动部署合约 🎮${RESET}                                       ${RED_RAIN}║\n${RESET}"
-    printf "${ORANGE_RAIN}║${RESET}  ${BLUE}脚本由子清编写 🌐 欢迎加入 电报频道：${YELLOW}https://t.me/ksqxszq${RESET} ${ORANGE_RAIN}║\n${RESET}"
-
-    # 打印底部边框
-    for ((i=0; i<width; i++)); do
-        case $((i % 6)) in
-            0) printf "${RED_RAIN}═" ;;
-            1) printf "${ORANGE_RAIN}═" ;;
-            2) printf "${YELLOW_RAIN}═" ;;
-            3) printf "${GREEN_RAIN}═" ;;
-            4) printf "${CYAN_RAIN}═" ;;
-            5) printf "${BLUE_RAIN}═" ;;
-        esac
-    done
-    echo -e "${RESET}"
+# 显示标题函数，仅显示上下边框和标题
+display_header() {
+    clear
+    rainbow_border
+    echo -e " ${CYAN}${BOLD}🚀 EVM 自动部署合约 🎮${RESET}"
+    echo -e " ${MAGENTA}脚本由 @qklxsqf  编写 🧙‍♂️${RESET}"
+    echo -e " ${BLUE}欢迎加入电报频道：https://t.me/ksqxszq 🌐${RESET}"
+    rainbow_border
+    echo
 }
 
 # 显示信息的函数

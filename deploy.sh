@@ -79,11 +79,17 @@ install_dependencies() {
         git init
     fi
 
+    # 安装 Foundry 和 forge
     if ! command -v forge &> /dev/null; then
         show "未检测到 Foundry，正在安装..." "progress"
-        source <(curl -sL https://foundry.paradigm.xyz)
+        curl -L https://foundry.paradigm.xyz | bash
+        source "$HOME/.foundry/bin/foundryup"  # 初始化 Foundry 环境
+        foundryup  # 安装和更新 Foundry
+    else
+        show "Foundry 已安装，跳过安装步骤。" "progress"
     fi
 
+    # 检查并安装 OpenZeppelin 合约库
     if [ ! -d "$SCRIPT_DIR/lib/openzeppelin-contracts" ]; then
         show "克隆 OpenZeppelin 合约库..." "progress"
         git clone https://github.com/OpenZeppelin/openzeppelin-contracts.git "$SCRIPT_DIR/lib/openzeppelin-contracts"
@@ -109,6 +115,7 @@ input_required_details() {
 PRIVATE_KEY="$PRIVATE_KEY"
 TOKEN_NAME="$TOKEN_NAME"
 TOKEN_SYMBOL="$TOKEN_SYMBOL"
+RPC_URL="$RPC_URL"
 EOL
 
     cat <<EOL > "$SCRIPT_DIR/foundry.toml"
@@ -156,7 +163,7 @@ EOL
     # 部署合约
     show "正在部署合约..." "progress"
     DEPLOY_OUTPUT=$(forge create "$SCRIPT_DIR/src/MyToken.sol:MyToken" \
-        --rpc-url rpc_url \
+        --rpc-url "$RPC_URL" \
         --private-key "$PRIVATE_KEY")
 
     if [[ $? -ne 0 ]]; then
@@ -222,3 +229,4 @@ menu() {
 while true; do
     menu
 done
+

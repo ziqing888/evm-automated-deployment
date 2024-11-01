@@ -7,6 +7,51 @@ BLUE='\033[1;34m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
+RESET='\033[0m'
+
+# 彩虹颜色定义
+RED_RAIN='\033[1;31m'
+ORANGE_RAIN='\033[1;33m'
+YELLOW_RAIN='\033[1;93m'
+GREEN_RAIN='\033[1;32m'
+CYAN_RAIN='\033[1;36m'
+BLUE_RAIN='\033[1;34m'
+PURPLE_RAIN='\033[1;35m'
+
+# 彩虹方框函数，使用细边框字符包围内容
+rainbow_box() {
+    local width=60  # 设置边框宽度
+
+    # 打印顶部边框
+    for ((i=0; i<width; i++)); do
+        case $((i % 6)) in
+            0) printf "${RED_RAIN}═" ;;
+            1) printf "${ORANGE_RAIN}═" ;;
+            2) printf "${YELLOW_RAIN}═" ;;
+            3) printf "${GREEN_RAIN}═" ;;
+            4) printf "${CYAN_RAIN}═" ;;
+            5) printf "${BLUE_RAIN}═" ;;
+        esac
+    done
+    echo -e "${RESET}"
+
+    # 打印内容和左右边框
+    printf "${RED_RAIN}║${RESET}  ${CYAN}${BOLD}🚀 EVM 自动部署合约 🎮${RESET}                                       ${RED_RAIN}║\n${RESET}"
+    printf "${ORANGE_RAIN}║${RESET}  ${BLUE}脚本由子清编写 🌐 欢迎加入 电报频道：${YELLOW}https://t.me/ksqxszq${RESET} ${ORANGE_RAIN}║\n${RESET}"
+
+    # 打印底部边框
+    for ((i=0; i<width; i++)); do
+        case $((i % 6)) in
+            0) printf "${RED_RAIN}═" ;;
+            1) printf "${ORANGE_RAIN}═" ;;
+            2) printf "${YELLOW_RAIN}═" ;;
+            3) printf "${GREEN_RAIN}═" ;;
+            4) printf "${CYAN_RAIN}═" ;;
+            5) printf "${BLUE_RAIN}═" ;;
+        esac
+    done
+    echo -e "${RESET}"
+}
 
 # 显示信息的函数
 show() {
@@ -49,7 +94,7 @@ install_dependencies() {
 
 # 输入部署所需信息的函数
 input_required_details() {
-    echo -e "-----------------------------------"
+    rainbow_box
     if [ -f "$SCRIPT_DIR/deployment/.env" ]; then
         rm "$SCRIPT_DIR/deployment/.env"
     fi
@@ -66,7 +111,6 @@ TOKEN_NAME="$TOKEN_NAME"
 TOKEN_SYMBOL="$TOKEN_SYMBOL"
 EOL
 
-    # 生成配置文件
     cat <<EOL > "$SCRIPT_DIR/foundry.toml"
 [profile.default]
 src = "src"
@@ -150,37 +194,27 @@ deploy_multiple_contracts() {
 
 # 菜单显示函数
 menu() {
-    echo -e "\n${BLUE}┌─────────────────────────────────────┐${NORMAL}"
-    echo -e "${BLUE}│           菜单选项                  │${NORMAL}"
-    echo -e "${BLUE}├─────────────────────────────────────┤${NORMAL}"
-    echo -e "${BLUE}│  1) 安装依赖                        │${NORMAL}"
-    echo -e "${BLUE}│  2) 输入所需信息                    │${NORMAL}"
-    echo -e "${BLUE}│  3) 部署合约                        │${NORMAL}"
-    echo -e "${BLUE}│  4) 批量部署合约                    │${NORMAL}"
-    echo -e "${BLUE}│  5) 退出                            │${NORMAL}"
-    echo -e "${BLUE}└─────────────────────────────────────┘${NORMAL}"
+    rainbow_box
+
+    echo -e "\n${BLUE}┌───────────────────────────────────────┐${NORMAL}"
+    echo -e "${BLUE}│           菜单选项                    │${NORMAL}"
+    echo -e "${BLUE}├───────────────────────────────────────┤${NORMAL}"
+    echo -e "${BLUE}│  1) 安装依赖                          │${NORMAL}"
+    echo -e "${BLUE}│  2) 输入所需信息                      │${NORMAL}"
+    echo -e "${BLUE}│  3) 部署合约                          │${NORMAL}"
+    echo -e "${BLUE}│  4) 批量部署合约                      │${NORMAL}"
+    echo -e "${BLUE}│  5) 退出                              │${NORMAL}"
+    echo -e "${BLUE}└───────────────────────────────────────┘${NORMAL}"
 
     read -p "请输入选择 (1-5): " CHOICE
 
     case $CHOICE in
-        1)
-            install_dependencies
-            ;;
-        2)
-            input_required_details
-            ;;
-        3)
-            deploy_contract
-            ;;
-        4)
-            deploy_multiple_contracts
-            ;;
-        5)
-            exit 0
-            ;;
-        *)
-            show "无效选择，请输入 1 到 5 之间的数字。" "error"
-            ;;
+        1) install_dependencies ;;
+        2) input_required_details ;;
+        3) deploy_contract ;;
+        4) deploy_multiple_contracts ;;
+        5) exit 0 ;;
+        *) show "无效选择，请输入 1 到 5 之间的数字。" "error" ;;
     esac
 }
 
